@@ -5,29 +5,29 @@
 
 
 	Parameters:
-	[bool] PlayerController.isActive - returns whether controller is active or not
+	[bool] CharacterController.isActive - returns whether controller is active or not
 
 
 	Methods:
-	PlayerController:setActive([bool]) - enables or disables controller listening to user touch
+	CharacterController:setActive([bool]) - enables or disables controller listening to user touch
 
 
 	Usage: 
 
 	1. (in scene)
 	local mainCharacter = require("Modules.MainCharacter");
-	local playerController = require("Modules.PlayerController");
-	playerController:init(mainCharacter);
-	playerController:setActive(true);
+	local characterController = require("Modules.CharacterController");
+	characterController:init(mainCharacter);
+	characterController:setActive(true);
 
 ]]--
-local playerController = {};
+local characterController = {};
 
 -- public parameters
-playerController.isActive = false;
+characterController.isActive = false;
 
 -- private parameters
-local mainCharacter = nil; -- MainCharacter object
+local character = nil; -- MainCharacter object
 
 -- pre-declaration of gesture functions
 local onSwipeUp = nil;
@@ -40,13 +40,13 @@ local onSingleTap = nil;
 local touchListener = nil;
 
 -- methods
-function playerController:init(character)
-
+function characterController:init(targetCharacter)
+	character = targetCharacter;
 end
 
-function playerController:setActive(flag)
+function characterController:setActive(flag)
 	-- don't add event listener if state hasn't changed
-	if(flag==playerController.isActive) then return end
+	if(flag==characterController.isActive) then return end
 
 	if(flag) then
 		display.getCurrentStage():addEventListener( "touch", touchListener );
@@ -58,7 +58,7 @@ end
 -- initialization of touch listener
 touchListener = function(event)
 	if(event.phase=="began") then
-		
+		print(character)
 	elseif(event.phase=="moved") then
 		
 	elseif(event.phase=="ended" or event.phase=="cancelled") then
@@ -86,4 +86,4 @@ onSingleTap = function()
 	
 end
 
-return playerController;
+return characterController;
