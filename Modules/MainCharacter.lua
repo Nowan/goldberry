@@ -19,10 +19,10 @@
 
 ]]--
 local mainCharacter = display.newImage("Textures/boy.png");
-local startAngle = math.rad(10);
+local startAngle = math.rad(30);
+local surfaceRadius = planetRadius+45;
 mainCharacter.x = planetCenterX;
-mainCharacter.y = planetCenterY-planetRadius*math.cos(startAngle);
-mainCharacter.angle = 0;
+mainCharacter.y = planetCenterY-surfaceRadius*math.cos(startAngle);
 
 -- private parameters
 local maxSpeedX = 12.0;
@@ -94,10 +94,8 @@ local function movementController(event)
 	local targetArc = currentArc+stepDistance;
 	local targetAngle = (targetArc*180)/(math.pi*planetRadius);
 
-
-	local radius = planetRadius + 45;
-	mainCharacter.x = planetCenterX + radius * math.cos(math.rad(targetAngle));
-	mainCharacter.y = planetCenterY + radius * math.sin(math.rad(targetAngle));
+	mainCharacter.x = planetCenterX + surfaceRadius * math.cos(math.rad(targetAngle));
+	mainCharacter.y = planetCenterY + surfaceRadius * math.sin(math.rad(targetAngle));
 end
 Runtime:addEventListener( "enterFrame", movementController )
 

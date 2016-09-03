@@ -4,6 +4,12 @@
 
 ]]--
 
+girlProgress = 0;
+guyProgress = 100
+mainCharacter = {}
+rotateGroup = {}
+planetRadius = 2000;
+
 content = {};
 content.width = display.contentWidth; -- width of content letterbox
 content.height = display.contentHeight; -- height of content letterbox
@@ -17,3 +23,6 @@ rotateGroup = {}
 planetRadius = 2000;
 planetCenterX = content.centerX;
 planetCenterY = content.height+planetRadius-200;
+
+fromTime = 5 -- secons from 5 (star)
+toTime = 15 -- secons to 15 (star)

@@ -12,14 +12,27 @@ local characterController = nil;
 function scene:create( event )
     local sceneGroup = self.view;
     local bg = display.newImage("Textures/background.png",content.centerX,content.centerY)
-    bg.width =content.screenWidth
+    bg.width = content.screenWidth
     bg.height = content.height
     mainCharacter = require("Modules.MainCharacter");
+    goldberry = require("Modules.Goldberry");
     characterController = require("Modules.CharacterController");
     planet = require("Modules.Planet")
     characterController:init(mainCharacter);
     characterController:setActive(true);
+    mod_star = require("Modules.Spawning.Star")
+    local star = mod_star.spawn
+    local myText = display.newText( girlProgress, 100, 200, native.systemFont, 16 )
+    myText:setFillColor( 1, 0, 0 )
+    local myText1 = display.newText( guyProgress, 800, 200, native.systemFont, 16 )
+    myText1:setFillColor( 1, 0, 0 )
+    local function progressTest()
+            myText.text = girlProgress
+            myText1.text = guyProgress
+    end
+    Runtime:addEventListener( "enterFrame", progressTest )
 end
+
 
 
 function scene:show( event )
