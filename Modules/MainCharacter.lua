@@ -19,10 +19,10 @@
 
 ]]--
 local mainCharacter = display.newImage("Textures/boy.png");
-local startAngle = math.rad(30);
 local surfaceRadius = planetRadius+45;
-mainCharacter.x = planetCenterX;
-mainCharacter.y = planetCenterY-surfaceRadius*math.cos(startAngle);
+mainCharacter.onPlanetPosition = 270
+mainCharacter.x = planetCenterX + surfaceRadius * math.cos(mainCharacter.onPlanetPosition);
+mainCharacter.y = planetCenterY + surfaceRadius*math.sin(mainCharacter.onPlanetPosition);
 
 -- private parameters
 local maxSpeedX = 12.0;
@@ -35,8 +35,6 @@ local directionY = 0;
 
 local friction = 0.5;
 local acceleration = 0.5;
--- when true, forces character to slowly stop in runtime
-
 
 -- methods declarations
 function mainCharacter:setVectors(vecX, vecY)
@@ -89,13 +87,13 @@ local function movementController(event)
 	end
 	local stepDistance = velocityX*deltaTime;
 
-	local currentAngle = 180+math.acos((planetCenterX-mainCharacter.x)/planetRadius)*180/math.pi;
+	local currentAngle = mainCharacter.onPlanetPosition;
 	local currentArc = math.pi*planetRadius*currentAngle/180;
 	local targetArc = currentArc+stepDistance;
-	local targetAngle = (targetArc*180)/(math.pi*planetRadius);
+	mainCharacter.onPlanetPosition = (targetArc*180)/(math.pi*planetRadius);
 
-	mainCharacter.x = planetCenterX + surfaceRadius * math.cos(math.rad(targetAngle));
-	mainCharacter.y = planetCenterY + surfaceRadius * math.sin(math.rad(targetAngle));
+	mainCharacter.x = planetCenterX + surfaceRadius * math.cos(math.rad(mainCharacter.onPlanetPosition));
+	mainCharacter.y = planetCenterY + surfaceRadius * math.sin(math.rad(mainCharacter.onPlanetPosition));
 end
 Runtime:addEventListener( "enterFrame", movementController )
 

@@ -40,6 +40,7 @@ local function turnAround()
 
 end
 local function goldberryAI()
+	--[[
 	distance =  math.sqrt((goldberry.x - mainCharacter.x)*(goldberry.x -mainCharacter.x) + (goldberry.y - mainCharacter.y)*(goldberry.y - mainCharacter.y))
 	--print("hg")
 	if  goldberry.busy == false and distance < 200 then
@@ -57,7 +58,7 @@ local function goldberryAI()
 			hit()
 		end
 	end
-
+	]]--
 end
 
 Runtime:addEventListener( "enterFrame", goldberryAI )
