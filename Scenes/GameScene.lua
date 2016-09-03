@@ -18,6 +18,8 @@ function scene:create( event )
     planet = require("Modules.Planet")
     characterController:init(mainCharacter);
     characterController:setActive(true);
+    mod_star = require("Modules.Spawning.Star")
+    local star = mod_star.spawn
 end
 
 
