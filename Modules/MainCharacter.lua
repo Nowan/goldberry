@@ -18,20 +18,42 @@
 	mainCharacter:walk(0.234,-0.873);
 
 ]]--
-local mainCharacter = {};
+local mainCharacter = display.newImage("Textures/boy.png");
+mainCharacter.x = content.screenRightEdge-200;
+mainCharacter.y = content.height - 200;
 
 -- private parameters
-local speedX = 10.0;
-local speedY = 5.0;
+local speedX = 3.0;
+local speedY = 1.5;
+
+local vectorX = 0;
+local vectorY = 0;
 
 -- methods declarations
-function mainCharacter:walk(vector)
-	print("Character walks in direction "..vector.." ");
+function mainCharacter:walk(vecX, vecY)
+	vectorX = vecX and vecX or 0;
+	vectorY = vecY and vecY or 0;
 end
 
 function mainCharacter:jump()
 	print("Character jumps");
 end
 
+-- controlling character movements
+
+local runtime = 0
+ 
+local function getDeltaTime()
+    local temp = system.getTimer()  -- Get current game time in ms
+    local dt = (temp-runtime) / (1000/60)  -- 60 fps or 30 fps as base
+    runtime = temp  -- Store game time
+    return dt
+end
+
+local function movementController(event)
+	local deltaTime = getDeltaTime();
+	mainCharacter.x = mainCharacter.x + speedX*vectorX*deltaTime;
+end
+Runtime:addEventListener( "enterFrame", movementController )
 
 return mainCharacter;
