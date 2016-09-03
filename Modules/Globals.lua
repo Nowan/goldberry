@@ -3,7 +3,7 @@
 	Module that initializes all values with global visibility
 
 ]]--
-
+planetRadius = 2000;
 content = {};
 content.width = display.contentWidth; -- width of content letterbox
 content.height = display.contentHeight; -- height of content letterbox

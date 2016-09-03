@@ -15,6 +15,7 @@ function scene:create( event )
 
     mainCharacter = require("Modules.MainCharacter");
     characterController = require("Modules.CharacterController");
+    planet = require("Modules.Planet")
     characterController:init(mainCharacter);
     characterController:setActive(true);
 end
