@@ -3,6 +3,7 @@
 	Module that initializes all values with global visibility
 
 ]]--
+rotateGroup = {}
 planetRadius = 2000;
 content = {};
 content.width = display.contentWidth; -- width of content letterbox

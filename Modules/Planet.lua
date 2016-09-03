@@ -9,7 +9,7 @@
 local planet = display.newGroup( );
 local speed = 1
 local ground = display.newCircle( content.centerX, content.height*3.4, planetRadius )
-local rotateGroup = {}
+--local rotateGroup = {}
 local m_Flower = require("Modules.Spawning.Flower");
 
 for i=1,20 do

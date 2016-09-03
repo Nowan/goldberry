@@ -9,10 +9,11 @@ local scene = composer.newScene();
 -- modules pre-declaration
 local mainCharacter = nil;
 local characterController = nil;
-
 function scene:create( event )
     local sceneGroup = self.view;
-
+    local bg = display.newImage("Textures/background.png",content.centerX,content.centerY)
+    bg.width =content.screenWidth
+    bg.height = content.height
     mainCharacter = require("Modules.MainCharacter");
     characterController = require("Modules.CharacterController");
     planet = require("Modules.Planet")
