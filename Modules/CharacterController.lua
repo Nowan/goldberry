@@ -97,9 +97,37 @@ touchListener = function(event)
 		dx = event.x - startX;
 		dy = event.y - startY;
 		
+		if math.abs(dx) > 40 then
+				
+				direction = "x"
+				if dx > 1 then
+					if event.x < newdx then 
+						dx = 0;
+						startX = event.x
+					end
+					print("right")
+				elseif dx < - 1 then
+					if event.x > newdx then 
+						dx = 0;
+						startX = event.x
+					end
+					print("left")
+				else
+					print("tap")
+				end
+	
+				if math.abs(dx) > 1 then
+					checkVector(direction,dx)
+				end
+				
+		elseif math.abs(dy) > 40 then
+
+		end
+
+
  		--newdy = event.y
 		--onSwipe(event);
-		if math.abs(dy) < 40 then
+		--[[if math.abs(dy) < 40 then
 			print(newdx,dx)
 	
 			if dx == 0 and dy == 0 then
@@ -138,11 +166,17 @@ touchListener = function(event)
 				--	checkVector(direction,dx)
 				--end
 				--newdx = event.x
-			end
-		end
+			end]]
+		--end
 		newdx = event.x
 	elseif(event.phase=="ended" or event.phase=="cancelled") then
 		--print("touchEnded")
+		if dy < -160 and math.abs(dx) < 40 then
+			print("JUMP!!!!")
+		end
+		if dy > 160  and math.abs(dx) < 40 then
+			print("DOWN!!!!")
+		end
 		vector = 0;
 		character:setVectors(vector);
 
