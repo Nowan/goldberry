@@ -30,8 +30,14 @@ local function hit()
 	transition.to(goldberry,{time = 500, x = goldberry.x + 50})
 	guyProgress = guyProgress - 10
 end
+local function jump()
+
+end
 local function cancelAll()
 	transition.cancel(goldberry)
+end
+local function turnAround()
+
 end
 local function goldberryAI()
 	distance =  math.sqrt((goldberry.x - mainCharacter.x)*(goldberry.x -mainCharacter.x) + (goldberry.y - mainCharacter.y)*(goldberry.y - mainCharacter.y))
