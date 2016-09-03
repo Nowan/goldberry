@@ -22,6 +22,7 @@ local mainCharacter = display.newImage("Textures/boy.png");
 local startAngle = math.rad(10);
 mainCharacter.x = planetCenterX;
 mainCharacter.y = planetCenterY-planetRadius*math.cos(startAngle);
+mainCharacter.angle = 0;
 
 -- private parameters
 local maxSpeedX = 12.0;
@@ -74,12 +75,6 @@ end
 local function movementController(event)
 	local deltaTime = getDeltaTime();
 
---[[
-radius = math.sqrt((rotateGroup[i].x - ground.x)^2 + (rotateGroup[i].y - ground.y)^2)
-		rotateGroup[i].x = -radius * (math.cos(math.rad(rotateGroup[i].startPos)))/1 +ground.x
-		rotateGroup[i].y = -radius * (math.sin(math.rad(rotateGroup[i].startPos)))/1 +ground.y
-]]--
-
 	if(directionX==0) then
 		if(velocityX==0) then return end; -- return if character doesn't move
 
@@ -94,17 +89,15 @@ radius = math.sqrt((rotateGroup[i].x - ground.x)^2 + (rotateGroup[i].y - ground.
 	end
 	local stepDistance = velocityX*deltaTime;
 
-	local angle = math.asin(stepDistance/planetRadius);
-	print(angle);
+	local currentAngle = 180+math.acos((planetCenterX-mainCharacter.x)/planetRadius)*180/math.pi;
+	local currentArc = math.pi*planetRadius*currentAngle/180;
+	local targetArc = currentArc+stepDistance;
+	local targetAngle = (targetArc*180)/(math.pi*planetRadius);
 
-	mainCharacter.x = planetCenterX;
-	mainCharacter.y = planetCenterY-planetRadius*math.sin(angle);
-	--mainCharacter.y = mainCharacter.y + changeX*math.sin(angle);
---[[
-	local startAngle = math.rad(10);
-mainCharacter.x = planetCenterX;
-mainCharacter.y = planetCenterY-planetRadius*math.cos(startAngle);
---]]
+
+	local radius = planetRadius + 45;
+	mainCharacter.x = planetCenterX + radius * math.cos(math.rad(targetAngle));
+	mainCharacter.y = planetCenterY + radius * math.sin(math.rad(targetAngle));
 end
 Runtime:addEventListener( "enterFrame", movementController )
 
