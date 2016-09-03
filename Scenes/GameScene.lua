@@ -6,10 +6,17 @@
 local composer = require( "composer" );
 local scene = composer.newScene();
 
+-- modules pre-declaration
+local mainCharacter = nil;
+local characterController = nil;
 
 function scene:create( event )
     local sceneGroup = self.view;
 
+    mainCharacter = require("Modules.MainCharacter");
+    characterController = require("Modules.CharacterController");
+    characterController:init(mainCharacter);
+    characterController:setActive(true);
 end
 
 

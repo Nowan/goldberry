@@ -30,10 +30,7 @@ characterController.isActive = false;
 local character = nil; -- MainCharacter object
 
 -- pre-declaration of gesture functions
-local onSwipeUp = nil;
-local onSwipeDown = nil;
-local onSwipeLeft = nil;
-local onSwipeRight = nil;
+local onSwipe = nil;
 local onSingleTap = nil;
 
 -- pre-declaration of touch listener function
@@ -58,28 +55,16 @@ end
 -- initialization of touch listener
 touchListener = function(event)
 	if(event.phase=="began") then
-		
+
 	elseif(event.phase=="moved") then
-		
+		onSwipe(event);
 	elseif(event.phase=="ended" or event.phase=="cancelled") then
 		
 	end
 end
 
-onSwipeUp = function()
-
-end
-
-onSwipeDown = function()
-	
-end
-
-onSwipeLeft = function()
-	
-end
-
-onSwipeRight = function()
-	
+onSwipe = function(event)
+	character:walk(event.x,event.y);
 end
 
 onSingleTap = function()
