@@ -3,6 +3,7 @@
 	Module that initializes all values with global visibility
 
 ]]--
+mainCharacter = {}
 rotateGroup = {}
 planetRadius = 2000;
 content = {};

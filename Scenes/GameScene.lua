@@ -15,11 +15,13 @@ function scene:create( event )
     bg.width =content.screenWidth
     bg.height = content.height
     mainCharacter = require("Modules.MainCharacter");
+    goldberry = require("Modules.Goldberry");
     characterController = require("Modules.CharacterController");
     planet = require("Modules.Planet")
     characterController:init(mainCharacter);
     characterController:setActive(true);
 end
+
 
 
 function scene:show( event )

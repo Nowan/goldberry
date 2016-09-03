@@ -18,7 +18,7 @@
 	mainCharacter:setVectors(0.234,-0.873);
 
 ]]--
-local mainCharacter = display.newImage("Textures/boy.png");
+mainCharacter = display.newImage("Textures/boy.png");
 mainCharacter.x = content.screenRightEdge-200;
 mainCharacter.y = content.height - 200;
 
