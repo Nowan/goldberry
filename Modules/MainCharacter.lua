@@ -23,18 +23,33 @@ mainCharacter.x = content.screenRightEdge-200;
 mainCharacter.y = content.height - 200;
 
 -- private parameters
-local speedX = 3.0;
+local speedX = 6.0;
 local speedY = 1.5;
 
 local vectorX = 0;
 local vectorY = 0;
+local directionX = 0;
+local directionY = 0;
 
 local friction = 5.0;
 
 -- methods declarations
 function mainCharacter:setVectors(vecX, vecY)
-	vectorX = vecX and vecX or 0;
-	vectorY = vecY and vecY or 0;
+	if vecX then
+		if(vecX==0) then
+			directionX = 0;
+		else
+			directionX = vecX>0 and math.ceil( vecX ) or math.floor(vecX);
+		end
+	end
+	
+	if vecY then
+		if(vecY==0) then
+			directionY = 0;
+		else
+			directionY = vecY>0 and math.ceil( vecY ) or math.floor(vecY);
+		end
+	end
 end
 
 function mainCharacter:jump()
@@ -54,7 +69,7 @@ end
 
 local function movementController(event)
 	local deltaTime = getDeltaTime();
-	mainCharacter.x = mainCharacter.x + speedX*vectorX*deltaTime;
+	mainCharacter.x = mainCharacter.x + speedX*directionX*deltaTime;
 
 	-- slowly decrease vectorX to stop character
 	local decrement = (friction/100)*deltaTime;
