@@ -39,6 +39,8 @@ local touchListener = nil;
 
 	local dx; -- delta x
 	local dy; -- delta y
+	local newdx;
+	local newdy;
 	local startX; -- touch start X
 	local startY; -- touch start Y
 	local direction; -- swipe direction
@@ -88,42 +90,56 @@ touchListener = function(event)
 		startY = event.y;
 		dx = 0;
 		dy = 0;
-
+		newdx = event.x
 	elseif(event.phase=="moved") then
 		--print("touchMoved")
 		dx = event.x - startX;
 		dy = event.y - startY;
+		
+ 		--newdy = event.y
 		--onSwipe(event);
-
-
-		if dx == 0 and dy == 0 then
-			print("tap")
-		elseif math.abs(dx) > math.abs(dy) then
-			direction = "x"
-			if dx > 1 then
-				print("right")
-			elseif dx < - 1 then
-				print("left")
-			else
+		if math.abs(dy) < 40 then
+			print(newdx,dx)
+	
+			if dx == 0 and dy == 0 then
 				print("tap")
+			elseif math.abs(dx) > math.abs(dy) then
+				direction = "x"
+				if dx > 1 then
+					if event.x < newdx then 
+						dx = 0;
+						startX = event.x
+					end
+					print("right")
+				elseif dx < - 1 then
+					if event.x > newdx then 
+						dx = 0;
+						startX = event.x
+					end
+					print("left")
+				else
+					print("tap")
+				end
+	
+				if math.abs(dx) > 1 then
+					checkVector(direction,dx)
+				end
+			elseif math.abs(dx) < math.abs(dy) then
+				--direction = "y"
+				if dy > 50 then
+					print("bot")
+				elseif dy < - 50 then
+					print("top")
+				else
+					print("tap")
+				end
+				--if math.abs(dy) > 40 then
+				--	checkVector(direction,dx)
+				--end
+				--newdx = event.x
 			end
-			if math.abs(dx) > 1 then
-				checkVector(direction,dx)
-			end
-		elseif math.abs(dx) < math.abs(dy) then
-			--direction = "y"
-			if dy > 1 then
-				print("bot")
-			elseif dy < - 1 then
-				print("top")
-			else
-				print("tap")
-			end
-			--if math.abs(dy) > 40 then
-			--	checkVector(direction,dx)
-			--end
 		end
-
+		newdx = event.x
 	elseif(event.phase=="ended" or event.phase=="cancelled") then
 		--print("touchEnded")
 
