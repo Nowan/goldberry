@@ -19,8 +19,9 @@
 
 ]]--
 local mainCharacter = display.newImage("Textures/boy.png");
-mainCharacter.x = content.screenRightEdge-200;
-mainCharacter.y = content.height - 200;
+local startAngle = math.rad(10);
+mainCharacter.x = planetCenterX;
+mainCharacter.y = planetCenterY-planetRadius*math.cos(startAngle);
 
 -- private parameters
 local maxSpeedX = 12.0;
@@ -63,7 +64,6 @@ end
 -- controlling character movements
 
 local runtime = 0
- 
 local function getDeltaTime()
     local temp = system.getTimer()  -- Get current game time in ms
     local dt = (temp-runtime) / (1000/60)  -- 60 fps or 30 fps as base
@@ -97,9 +97,14 @@ radius = math.sqrt((rotateGroup[i].x - ground.x)^2 + (rotateGroup[i].y - ground.
 	local angle = math.asin(stepDistance/planetRadius);
 	print(angle);
 
-	mainCharacter.x = planetCenterX+planetRadius*math.cos(stepDistance);
-	mainCharacter.y = planetCenterY+planetRadius*math.sin(stepDistance);
+	mainCharacter.x = planetCenterX;
+	mainCharacter.y = planetCenterY-planetRadius*math.sin(angle);
 	--mainCharacter.y = mainCharacter.y + changeX*math.sin(angle);
+--[[
+	local startAngle = math.rad(10);
+mainCharacter.x = planetCenterX;
+mainCharacter.y = planetCenterY-planetRadius*math.cos(startAngle);
+--]]
 end
 Runtime:addEventListener( "enterFrame", movementController )
 
