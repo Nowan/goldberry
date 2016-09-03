@@ -58,7 +58,7 @@ end
 -- initialization of touch listener
 touchListener = function(event)
 	if(event.phase=="began") then
-		print(character)
+		
 	elseif(event.phase=="moved") then
 		
 	elseif(event.phase=="ended" or event.phase=="cancelled") then
