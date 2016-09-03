@@ -143,13 +143,14 @@ touchListener = function(event)
 		newdx = event.x
 	elseif(event.phase=="ended" or event.phase=="cancelled") then
 		--print("touchEnded")
-
+		vector = 0;
+		character:setVectors(vector);
 
 	end
 end
 
 onSwipe = function(vector)
-	character:walk(vector);
+	character:setVectors(vector);
 end
 
 onSingleTap = function()
