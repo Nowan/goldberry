@@ -40,7 +40,7 @@ local function turnAround()
 
 end
 local function goldberryAI()
-	distance =  math.sqrt((goldberry.x - mainCharacter.x)*(goldberry.x -mainCharacter.x) + (goldberry.y - mainCharacter.y)*(goldberry.y - mainCharacter.y))
+	--[[distance =  math.sqrt((goldberry.x - mainCharacter.x)*(goldberry.x -mainCharacter.x) + (goldberry.y - mainCharacter.y)*(goldberry.y - mainCharacter.y))
 	--print("hg")
 	if  goldberry.busy == false and distance < 200 then
 		--print("opaopa")
@@ -56,7 +56,7 @@ local function goldberryAI()
 		elseif r == 3 then
 			hit()
 		end
-	end
+	end]]
 
 end
 

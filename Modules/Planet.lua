@@ -8,7 +8,7 @@
 
 local planet = display.newGroup( );
 local speed = 1
-local ground = display.newCircle( planetCenterX, planetCenterY, planetRadius )
+local ground = display.newImage("Textures/planet.png", planetCenterX, planetCenterY, planetRadius )
 --local rotateGroup = {}
 local m_Flower = require("Modules.Spawning.Flower");
 
