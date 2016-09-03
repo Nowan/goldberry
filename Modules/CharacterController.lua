@@ -22,7 +22,6 @@
 
 ]]--
 local characterController = {};
-
 -- public parameters
 characterController.isActive = false;
 
@@ -35,6 +34,18 @@ local onSingleTap = nil;
 
 -- pre-declaration of touch listener function
 local touchListener = nil;
+
+-- var declarations:
+
+	local dx; -- delta x
+	local dy; -- delta y
+	local startX; -- touch start X
+	local startY; -- touch start Y
+	local direction; -- swipe direction
+	local vector; -- swipe "power"
+	local vectorPower = content.screenWidth/4; -- vector max value
+	--local
+
 
 -- methods
 function characterController:init(targetCharacter)
@@ -51,15 +62,72 @@ function characterController:setActive(flag)
 		display.getCurrentStage():removeEventListener( "touch", touchListener );
 	end
 end
+-- looking for vector
 
+function checkVector(direction, delta)
+	if direction == "x" then
+		print("x direction")
+		vector = ((vectorPower)/100 * delta)/1000
+		if math.abs(vector) > 1 then
+			if vector < 0 then
+				vector = -1
+			end
+			if vector > 0 then
+				vector = 1
+			end
+		end
+		print(vector)
+	end
+end
 -- initialization of touch listener
 touchListener = function(event)
+
 	if(event.phase=="began") then
+		--print("touchBegan")
+		startX = event.x;
+		startY = event.y;
+		dx = 0;
+		dy = 0;
 
 	elseif(event.phase=="moved") then
-		onSwipe(event);
+		--print("touchMoved")
+		dx = event.x - startX;
+		dy = event.y - startY;
+		--onSwipe(event);
+
+
+		if dx == 0 and dy == 0 then
+			print("tap")
+		elseif math.abs(dx) > math.abs(dy) then
+			direction = "x"
+			if dx > 1 then
+				print("right")
+			elseif dx < - 1 then
+				print("left")
+			else
+				print("tap")
+			end
+			if math.abs(dx) > 1 then
+				checkVector(direction,dx)
+			end
+		elseif math.abs(dx) < math.abs(dy) then
+			--direction = "y"
+			if dy > 1 then
+				print("bot")
+			elseif dy < - 1 then
+				print("top")
+			else
+				print("tap")
+			end
+			--if math.abs(dy) > 40 then
+			--	checkVector(direction,dx)
+			--end
+		end
+
 	elseif(event.phase=="ended" or event.phase=="cancelled") then
-		
+		--print("touchEnded")
+
+
 	end
 end
 
@@ -68,7 +136,7 @@ onSwipe = function(event)
 end
 
 onSingleTap = function()
-	
+	--print("onSingleTap")
 end
 
 return characterController;
