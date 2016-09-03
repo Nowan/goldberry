@@ -15,7 +15,7 @@
 	Usage:
 
 	To move character: (in runtime or any other continuous function):
-	mainCharacter:walk(0.234,-0.873);
+	mainCharacter:setVectors(0.234,-0.873);
 
 ]]--
 local mainCharacter = display.newImage("Textures/boy.png");
@@ -32,7 +32,7 @@ local vectorY = 0;
 local friction = 5.0;
 
 -- methods declarations
-function mainCharacter:walk(vecX, vecY)
+function mainCharacter:setVectors(vecX, vecY)
 	vectorX = vecX and vecX or 0;
 	vectorY = vecY and vecY or 0;
 end
