@@ -3,6 +3,8 @@
 	Module that initializes all values with global visibility
 
 ]]--
+girlProgress = 0;
+guyProgress = 100
 mainCharacter = {}
 rotateGroup = {}
 planetRadius = 2000;
