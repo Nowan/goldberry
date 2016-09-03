@@ -57,6 +57,7 @@ local function goldberryAI()
 		elseif r == 3 then
 			hit()
 		end
+
 	end
 	]]--
 end
