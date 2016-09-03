@@ -68,7 +68,7 @@ end
 
 function checkVector(direction, delta)
 	if direction == "x" then
-		print("x direction")
+		--print("x direction")
 		vector = ((vectorPower)/100 * delta)/1000
 		if math.abs(vector) > 1 then
 			if vector < 0 then
@@ -78,7 +78,7 @@ function checkVector(direction, delta)
 				vector = 1
 			end
 		end
-		print(vector)
+		--print(vector)
 		onSwipe(vector)
 	end
 end
@@ -105,15 +105,15 @@ touchListener = function(event)
 						dx = 0;
 						startX = event.x
 					end
-					print("right")
+					--print("right")
 				elseif dx < - 1 then
 					if event.x > newdx then 
 						dx = 0;
 						startX = event.x
 					end
-					print("left")
+					--print("left")
 				else
-					print("tap")
+					--print("tap")
 				end
 	
 				if math.abs(dx) > 1 then

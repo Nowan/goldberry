@@ -23,15 +23,18 @@ mainCharacter.x = content.screenRightEdge-200;
 mainCharacter.y = content.height - 200;
 
 -- private parameters
-local speedX = 6.0;
-local speedY = 1.5;
+local maxSpeedX = 8.0;
+local maxSpeedY = 1.5;
 
-local vectorX = 0;
-local vectorY = 0;
+local velocityX = 0.0;
+
 local directionX = 0;
 local directionY = 0;
 
-local friction = 5.0;
+local friction = 0.5;
+local acceleration = 0.5;
+-- when true, forces character to slowly stop in runtime
+
 
 -- methods declarations
 function mainCharacter:setVectors(vecX, vecY)
@@ -50,6 +53,7 @@ function mainCharacter:setVectors(vecX, vecY)
 			directionY = vecY>0 and math.ceil( vecY ) or math.floor(vecY);
 		end
 	end
+
 end
 
 function mainCharacter:jump()
@@ -69,11 +73,20 @@ end
 
 local function movementController(event)
 	local deltaTime = getDeltaTime();
-	mainCharacter.x = mainCharacter.x + speedX*directionX*deltaTime;
 
-	-- slowly decrease vectorX to stop character
-	local decrement = (friction/100)*deltaTime;
-	vectorX = vectorX >= 0 and math.max(vectorX-decrement,0) or math.min(vectorX+decrement,0);
+	if(directionX==0) then
+		if(velocityX==0) then return end; -- return if character doesn't move
+
+		-- slowly stop character
+		local velocityDirectionX = velocityX>0 and 1 or -1;
+		velocityX = velocityX - friction*velocityDirectionX*deltaTime;
+		if(math.abs(velocityX)<1) then velocityX = 0 end
+	else
+		-- slowly accelerate character
+		velocityX = velocityX + acceleration*directionX;
+		if(math.abs(velocityX)>maxSpeedX) then velocityX = maxSpeedX*directionX; end
+	end
+	mainCharacter.x = mainCharacter.x + velocityX*deltaTime;
 end
 Runtime:addEventListener( "enterFrame", movementController )
 
