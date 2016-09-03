@@ -172,7 +172,7 @@ touchListener = function(event)
 	elseif(event.phase=="ended" or event.phase=="cancelled") then
 		--print("touchEnded")
 		if dy < -160 and math.abs(dx) < 40 then
-			print("JUMP!!!!")
+			character:jump();
 		end
 		if dy > 160  and math.abs(dx) < 40 then
 			print("DOWN!!!!")

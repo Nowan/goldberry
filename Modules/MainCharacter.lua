@@ -19,10 +19,11 @@
 
 ]]--
 local mainCharacter = display.newImage("Textures/boy.png");
+-- radius of character "orbit", on which he moves
 local surfaceRadius = planetRadius+45;
 mainCharacter.onPlanetPosition = 270
-mainCharacter.x = planetCenterX + surfaceRadius * math.cos(mainCharacter.onPlanetPosition);
-mainCharacter.y = planetCenterY + surfaceRadius*math.sin(mainCharacter.onPlanetPosition);
+mainCharacter.x = planetCenterX + surfaceRadius * math.cos(math.rad(mainCharacter.onPlanetPosition));
+mainCharacter.y = planetCenterY + surfaceRadius * math.sin(math.rad(mainCharacter.onPlanetPosition));
 
 -- private parameters
 local maxSpeedX = 12.0;
@@ -35,6 +36,12 @@ local directionY = 0;
 
 local friction = 0.5;
 local acceleration = 0.5;
+
+-- when true, forces character to jump
+local isJumping = false;
+local jumpHeight = 300;
+local jumpArc = 0; -- angle for jump arc sinusoid
+local jumpSpeed = 3.7;
 
 -- methods declarations
 function mainCharacter:setVectors(vecX, vecY)
@@ -57,7 +64,12 @@ function mainCharacter:setVectors(vecX, vecY)
 end
 
 function mainCharacter:jump()
-	print("Character jumps");
+	-- ignore jump event if previous jump hasn't finished
+	if(isJumping) then return end
+
+	-- set jumping state to true and allow runtime handle the rest
+	isJumping = true;
+	jumpArc = 0;
 end
 
 -- controlling character movements
@@ -73,27 +85,44 @@ end
 local function movementController(event)
 	local deltaTime = getDeltaTime();
 
-	if(directionX==0) then
-		if(velocityX==0) then return end; -- return if character doesn't move
+	if(isJumping) then
+		-- when jumping - move character by sinusoidal trajektory for one period
+		-- reset jump state when period was reached
+		if(jumpArc>180) then 
+			isJumping=false; 
+			jumpArc=0;
+		end
 
-		-- slowly stop character
-		local velocityDirectionX = velocityX>0 and 1 or -1;
-		velocityX = velocityX - friction*velocityDirectionX*deltaTime;
-		if(math.abs(velocityX)<1) then velocityX = 0 end
+		-- slightly change character movement radius 
+		local leapHeight = surfaceRadius + jumpHeight*math.sin(math.rad(jumpArc));
+		mainCharacter.x = planetCenterX + leapHeight * math.cos(math.rad(mainCharacter.onPlanetPosition));
+		mainCharacter.y = planetCenterY + leapHeight * math.sin(math.rad(mainCharacter.onPlanetPosition));
+
+		-- increase sinusoidal entry
+		jumpArc = jumpArc + jumpSpeed;
 	else
-		-- slowly accelerate character
-		velocityX = velocityX + acceleration*directionX;
-		if(math.abs(velocityX)>maxSpeedX) then velocityX = maxSpeedX*directionX; end
+		if(directionX==0) then
+			if(velocityX==0) then return end; -- return if character doesn't move
+
+			-- slowly stop character
+			local velocityDirectionX = velocityX>0 and 1 or -1;
+			velocityX = velocityX - friction*velocityDirectionX*deltaTime;
+			if(math.abs(velocityX)<1) then velocityX = 0 end
+		else
+			-- slowly accelerate character
+			velocityX = velocityX + acceleration*directionX;
+			if(math.abs(velocityX)>maxSpeedX) then velocityX = maxSpeedX*directionX; end
+		end
+		local stepDistance = velocityX*deltaTime;
+
+		local currentAngle = mainCharacter.onPlanetPosition;
+		local currentArc = math.pi*planetRadius*currentAngle/180;
+		local targetArc = currentArc+stepDistance;
+		mainCharacter.onPlanetPosition = (targetArc*180)/(math.pi*planetRadius);
+
+		mainCharacter.x = planetCenterX + surfaceRadius * math.cos(math.rad(mainCharacter.onPlanetPosition));
+		mainCharacter.y = planetCenterY + surfaceRadius * math.sin(math.rad(mainCharacter.onPlanetPosition));
 	end
-	local stepDistance = velocityX*deltaTime;
-
-	local currentAngle = mainCharacter.onPlanetPosition;
-	local currentArc = math.pi*planetRadius*currentAngle/180;
-	local targetArc = currentArc+stepDistance;
-	mainCharacter.onPlanetPosition = (targetArc*180)/(math.pi*planetRadius);
-
-	mainCharacter.x = planetCenterX + surfaceRadius * math.cos(math.rad(mainCharacter.onPlanetPosition));
-	mainCharacter.y = planetCenterY + surfaceRadius * math.sin(math.rad(mainCharacter.onPlanetPosition));
 end
 Runtime:addEventListener( "enterFrame", movementController )
 
