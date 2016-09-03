@@ -18,7 +18,7 @@
 module(...,package.seeall);
 
 function new()
-	local flower = {};
-
+	local flower = display.newImage( "Textures/flower.png",content.centerX,content.centerY + math.random(210,311) )
+	flower:setFillColor( 1,0,0 )
 	return flower;
 end
