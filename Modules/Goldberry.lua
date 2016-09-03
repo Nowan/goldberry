@@ -6,10 +6,19 @@
 local goldberry = display.newImage( "Textures/girl.png",0,0 )
 goldberry.x = content.screenLeftEdge+200;
 goldberry.y = content.height - 200;
+goldberry.xScale = 0.8
+goldberry.yScale = 0.8
 goldberry.busy = false;
 local distance = 0;
 --goldberry:toFront()
 --print("BABA")
+
+heartGirl = display.newImage("Textures/heart.png");
+heartGirl.xScale = 1.2
+heartGirl.yScale = 1.2
+heartGirl.x = goldberry.x + 16
+heartGirl.y = goldberry.y -2
+heartGirl:setFillColor(girlProgress/100, 0, 1-(girlProgress/100) )
 
 local function makeFree()
 	goldberry.busy = false;
@@ -57,6 +66,9 @@ local function goldberryAI()
 			hit()
 		end
 	end]]
+
+--heartGirl.x = goldberry.x + 16
+--heartGirl.y = goldberry.y -2
 
 end
 

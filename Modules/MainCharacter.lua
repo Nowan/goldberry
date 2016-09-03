@@ -21,8 +21,19 @@
 local mainCharacter = display.newImage("Textures/boy.png");
 local startAngle = math.rad(30);
 local surfaceRadius = planetRadius+45;
-mainCharacter.x = planetCenterX;
-mainCharacter.y = planetCenterY-surfaceRadius*math.cos(startAngle);
+--mainCharacter.y = planetCenterY-surfaceRadius*math.cos(startAngle);
+mainCharacter.x = content.screenRightEdge-200;
+mainCharacter.y = content.height - 200;
+mainCharacter.xScale = 0.8
+mainCharacter.yScale = 0.8
+
+heartBoy = display.newImage("Textures/heart.png");
+heartBoy.xScale = 1.2
+heartBoy.yScale = 1.2
+heartBoy.x = mainCharacter.x
+heartBoy.y = mainCharacter.y + 30
+heartBoy.rotation = -45
+heartBoy:setFillColor(guyProgress/100, 0, math.abs(guyProgress/100)-1 )
 
 -- private parameters
 local maxSpeedX = 12.0;
@@ -96,6 +107,8 @@ local function movementController(event)
 
 	mainCharacter.x = planetCenterX + surfaceRadius * math.cos(math.rad(targetAngle));
 	mainCharacter.y = planetCenterY + surfaceRadius * math.sin(math.rad(targetAngle));
+	heartBoy.x = mainCharacter.x
+	heartBoy.y = mainCharacter.y + 30
 end
 Runtime:addEventListener( "enterFrame", movementController )
 
