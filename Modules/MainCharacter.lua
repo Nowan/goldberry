@@ -29,6 +29,8 @@ local speedY = 1.5;
 local vectorX = 0;
 local vectorY = 0;
 
+local friction = 5.0;
+
 -- methods declarations
 function mainCharacter:walk(vecX, vecY)
 	vectorX = vecX and vecX or 0;
@@ -53,6 +55,10 @@ end
 local function movementController(event)
 	local deltaTime = getDeltaTime();
 	mainCharacter.x = mainCharacter.x + speedX*vectorX*deltaTime;
+
+	-- slowly decrease vectorX to stop character
+	local decrement = (friction/100)*deltaTime;
+	vectorX = vectorX >= 0 and math.max(vectorX-decrement,0) or math.min(vectorX+decrement,0);
 end
 Runtime:addEventListener( "enterFrame", movementController )
 
