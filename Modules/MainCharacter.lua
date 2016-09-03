@@ -23,7 +23,7 @@ mainCharacter.x = content.screenRightEdge-200;
 mainCharacter.y = content.height - 200;
 
 -- private parameters
-local maxSpeedX = 8.0;
+local maxSpeedX = 12.0;
 local maxSpeedY = 1.5;
 
 local velocityX = 0.0;
@@ -74,6 +74,12 @@ end
 local function movementController(event)
 	local deltaTime = getDeltaTime();
 
+--[[
+radius = math.sqrt((rotateGroup[i].x - ground.x)^2 + (rotateGroup[i].y - ground.y)^2)
+		rotateGroup[i].x = -radius * (math.cos(math.rad(rotateGroup[i].startPos)))/1 +ground.x
+		rotateGroup[i].y = -radius * (math.sin(math.rad(rotateGroup[i].startPos)))/1 +ground.y
+]]--
+
 	if(directionX==0) then
 		if(velocityX==0) then return end; -- return if character doesn't move
 
@@ -86,7 +92,14 @@ local function movementController(event)
 		velocityX = velocityX + acceleration*directionX;
 		if(math.abs(velocityX)>maxSpeedX) then velocityX = maxSpeedX*directionX; end
 	end
-	mainCharacter.x = mainCharacter.x + velocityX*deltaTime;
+	local stepDistance = velocityX*deltaTime;
+
+	local angle = math.asin(stepDistance/planetRadius);
+	print(angle);
+
+	mainCharacter.x = planetCenterX+planetRadius*math.cos(stepDistance);
+	mainCharacter.y = planetCenterY+planetRadius*math.sin(stepDistance);
+	--mainCharacter.y = mainCharacter.y + changeX*math.sin(angle);
 end
 Runtime:addEventListener( "enterFrame", movementController )
 
