@@ -77,6 +77,7 @@ function checkVector(direction, delta)
 			end
 		end
 		print(vector)
+		onSwipe(vector)
 	end
 end
 -- initialization of touch listener
@@ -131,8 +132,8 @@ touchListener = function(event)
 	end
 end
 
-onSwipe = function(event)
-	character:walk(event.x,event.y);
+onSwipe = function(vector)
+	character:walk(vector);
 end
 
 onSingleTap = function()

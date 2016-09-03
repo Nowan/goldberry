@@ -25,8 +25,8 @@ local speedX = 10.0;
 local speedY = 5.0;
 
 -- methods declarations
-function mainCharacter:walk(vectorX, vectorY)
-	print("Character walks in direction "..vectorX.." "..vectorY);
+function mainCharacter:walk(vector)
+	print("Character walks in direction "..vector.." ");
 end
 
 function mainCharacter:jump()
