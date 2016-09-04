@@ -30,6 +30,7 @@ function scene:create( event )
     local function progressTest()
             myText.text = girlProgress
             heartGirl:setFillColor(girlProgress/100, 0, 1-(girlProgress/100) )
+            --print( statusStar.." statusStarMain" )
     end
     Runtime:addEventListener( "enterFrame", progressTest )
 end

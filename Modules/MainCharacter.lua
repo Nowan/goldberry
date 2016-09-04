@@ -199,7 +199,6 @@ local function movementController(event)
 	if(mainCharacter.x>= mainCharacter.linkToGoldberry.x-200 and mainCharacter.x<= mainCharacter.linkToGoldberry.x+200) then
 		mainCharacter:givePresent();
 	end
-
 end
 Runtime:addEventListener( "enterFrame", movementController )
 

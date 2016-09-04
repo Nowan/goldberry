@@ -125,9 +125,9 @@ touchListener = function(event)
 		end
 
 
- 		--newdy = event.y
-		--onSwipe(event);
-		--[[if math.abs(dy) < 40 then
+ 		--[[newdy = event.y
+		onSwipe(event);
+		if math.abs(dy) < 40 then
 			print(newdx,dx)
 	
 			if dx == 0 and dy == 0 then
@@ -166,13 +166,25 @@ touchListener = function(event)
 				--	checkVector(direction,dx)
 				--end
 				--newdx = event.x
-			end]]
-		--end
+			end
+		end]]
 		newdx = event.x
 	elseif(event.phase=="ended" or event.phase=="cancelled") then
 		--print("touchEnded")
 		if dy < -160 and math.abs(dx) < 40 then
 			character:jump();
+				local function coordinates( )
+					print( statusStar.." stausStarCharacter" )
+					if statusStar == 1 then
+					Star = display.newImage( "Textures/star_pointer_box.png" )
+					Star.height = 50
+					Star.width = 50
+					Star.x=coordinatesX
+					Star.y=coordinatesY
+					print( statusStar.." stausStarPers" )
+				end
+				Runtime:addEventListener( "enterFrame", coordinates )
+			end
 		end
 		if dy > 160  and math.abs(dx) < 40 then
 			character:pickFlower();

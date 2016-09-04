@@ -32,6 +32,8 @@ function spawn()
 			spawnStar.x = math.random( 0, content.centerX - 100);
 			tableStar[#tableStar+1] = spawnStar
 			timeSpawn = math.random( fromTime,toTime)
+			statusStar = 1
+			print( statusStar.." statusStar star" )
 			transition.to(tableStar[#tableStar], { time=700, x=math.random(content.centerX,content.width), y=math.random(100, content.centerY-50), onComplete=fadeOut} )
 		end
 	end
@@ -40,6 +42,7 @@ function spawn()
 
 	function fadeOut()
 		transition.fadeOut( tableStar[#tableStar], {time = 100} )
+		--statusStar = 0
 		tableStar[#tableStar]:removeSelf( )
 	end
 end
