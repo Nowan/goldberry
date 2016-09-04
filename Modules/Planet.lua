@@ -24,14 +24,13 @@ end
 --rotateGroup[#rotateGroup+1] = ground
 local function rotateAll()
 	for i=1, #rotateGroup  do
-		--speed = 1
-		--radius = planetRadius + 1000;
+		repeat
+		if not rotateGroup[i] then break end
 		radius = math.sqrt((rotateGroup[i].x - ground.x)*(rotateGroup[i].x - ground.x) + (rotateGroup[i].y - ground.y)*(rotateGroup[i].y - ground.y))
 		rotateGroup[i].x = -radius * (math.cos(math.rad(rotateGroup[i].startPos)))/1 +ground.x
 		rotateGroup[i].y = -radius * (math.sin(math.rad(rotateGroup[i].startPos)))/1 +ground.y
-		--rotateGroup[i].rotation = rotateGroup[i].rotation + speed
 		rotateGroup[i].startPos = rotateGroup[i].startPos + 0.03
-		--print(rotateGroup[i].x,rotateGroup[i].y)
+		until true;
 	end
 	ground.rotation = ground.rotation + 0.03
 end

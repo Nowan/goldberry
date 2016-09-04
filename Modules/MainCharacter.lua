@@ -28,13 +28,7 @@ mainCharacter.y = planetCenterY + surfaceRadius * math.sin(math.rad(mainCharacte
 mainCharacter.xScale = 0.8
 mainCharacter.yScale = 0.8
 
-heartBoy = display.newImage("Textures/heart.png");
-heartBoy.xScale = 1.2
-heartBoy.yScale = 1.2
-heartBoy.x = mainCharacter.x
-heartBoy.y = mainCharacter.y + 30
-heartBoy.rotation = -45
-heartBoy:setFillColor(guyProgress/100, 0, math.abs(guyProgress/100)-1 )
+objectInHand = nil;
 
 -- private parameters
 local maxSpeedX = 12.0;
@@ -83,6 +77,31 @@ function mainCharacter:jump()
 	jumpArc = 0;
 end
 
+function mainCharacter:pickFlower()
+	local pullAreaSize = 100;
+	-- get flower that is close to the character
+	for i=1, #rotateGroup  do
+		if(rotateGroup[i].x >= mainCharacter.x-pullAreaSize and rotateGroup[i].x <= mainCharacter.x+pullAreaSize) then
+			-- init new flower on place of current one
+			objectInHand = display.newImage( "Textures/flower.png" );
+			objectInHand.x = rotateGroup[i].x;
+			objectInHand.y = rotateGroup[i].y;
+
+			-- remove flower on planet
+			rotateGroup[i]:removeSelf( );
+			rotateGroup[i] = nil;
+
+			-- animate new flower
+			transition.to(objectInHand, {time=300, x=mainCharacter.x, y=mainCharacter.y + 30, rotation = -90})
+			break
+		end
+	end
+
+end
+
+function mainCharacter:catchStar()
+end
+
 -- controlling character movements
 
 local runtime = 0
@@ -109,6 +128,11 @@ local function movementController(event)
 		mainCharacter.x = planetCenterX + leapHeight * math.cos(math.rad(mainCharacter.onPlanetPosition));
 		mainCharacter.y = planetCenterY + leapHeight * math.sin(math.rad(mainCharacter.onPlanetPosition));
 
+		if(objectInHand) then 
+			objectInHand.x = mainCharacter.x
+			objectInHand.y = mainCharacter.y + 30
+		end
+
 		-- increase sinusoidal entry
 		jumpArc = jumpArc + jumpSpeed;
 	else
@@ -133,10 +157,12 @@ local function movementController(event)
 
 		mainCharacter.x = planetCenterX + surfaceRadius * math.cos(math.rad(mainCharacter.onPlanetPosition));
 		mainCharacter.y = planetCenterY + surfaceRadius * math.sin(math.rad(mainCharacter.onPlanetPosition));
-	end
 
-	heartBoy.x = mainCharacter.x
-	heartBoy.y = mainCharacter.y + 30
+		if(objectInHand~=nil) then 
+			objectInHand.x = mainCharacter.x
+			objectInHand.y = mainCharacter.y + 30
+		end
+	end
 end
 Runtime:addEventListener( "enterFrame", movementController )
 

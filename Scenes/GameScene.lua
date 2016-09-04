@@ -28,8 +28,6 @@ function scene:create( event )
     myText1:setFillColor( 1, 0, 0 )
     local function progressTest()
             myText.text = girlProgress
-            myText1.text = guyProgress
-            heartBoy:setFillColor(guyProgress/100, 0, 1-(guyProgress/100) )
             heartGirl:setFillColor(girlProgress/100, 0, 1-(girlProgress/100) )
     end
     Runtime:addEventListener( "enterFrame", progressTest )

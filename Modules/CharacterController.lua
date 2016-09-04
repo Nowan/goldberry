@@ -175,7 +175,7 @@ touchListener = function(event)
 			character:jump();
 		end
 		if dy > 160  and math.abs(dx) < 40 then
-			print("DOWN!!!!")
+			character:pickFlower();
 		end
 		vector = 0;
 		character:setVectors(vector);
