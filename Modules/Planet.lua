@@ -8,8 +8,10 @@
 
 local planet = display.newGroup( );
 local speed = 1
-local ground = display.newCircle( planetCenterX, planetCenterY, planetRadius )
+local ground = display.newImage("Textures/planet.png", planetCenterX, planetCenterY, planetRadius )
+ground.rotation = 0
 --local rotateGroup = {}
+
 local m_Flower = require("Modules.Spawning.Flower");
 
 for i=1,20 do
@@ -18,7 +20,6 @@ local flower =  m_Flower.new();
 	flower.startPos = math.random(1,360)
 	rotateGroup[#rotateGroup+1] = flower
 end
-
 
 --rotateGroup[#rotateGroup+1] = ground
 local function rotateAll()
@@ -32,6 +33,7 @@ local function rotateAll()
 		rotateGroup[i].startPos = rotateGroup[i].startPos + 0.03
 		--print(rotateGroup[i].x,rotateGroup[i].y)
 	end
+	ground.rotation = ground.rotation + 0.03
 end
 Runtime:addEventListener( "enterFrame", rotateAll )
  --rotateAll()

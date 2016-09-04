@@ -10,6 +10,13 @@ mainCharacter = {}
 rotateGroup = {}
 planetRadius = 2000;
 
+--test of color change
+--[[local function test()
+	girlProgress = girlProgress+0.1
+	guyProgress = guyProgress - 0.1
+end
+Runtime:addEventListener( "enterFrame", test )]]
+
 content = {};
 content.width = display.contentWidth; -- width of content letterbox
 content.height = display.contentHeight; -- height of content letterbox

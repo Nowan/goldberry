@@ -21,9 +21,20 @@
 local mainCharacter = display.newImage("Textures/boy.png");
 -- radius of character "orbit", on which he moves
 local surfaceRadius = planetRadius+45;
+
 mainCharacter.onPlanetPosition = 270
 mainCharacter.x = planetCenterX + surfaceRadius * math.cos(math.rad(mainCharacter.onPlanetPosition));
 mainCharacter.y = planetCenterY + surfaceRadius * math.sin(math.rad(mainCharacter.onPlanetPosition));
+mainCharacter.xScale = 0.8
+mainCharacter.yScale = 0.8
+
+heartBoy = display.newImage("Textures/heart.png");
+heartBoy.xScale = 1.2
+heartBoy.yScale = 1.2
+heartBoy.x = mainCharacter.x
+heartBoy.y = mainCharacter.y + 30
+heartBoy.rotation = -45
+heartBoy:setFillColor(guyProgress/100, 0, math.abs(guyProgress/100)-1 )
 
 -- private parameters
 local maxSpeedX = 12.0;
@@ -123,6 +134,9 @@ local function movementController(event)
 		mainCharacter.x = planetCenterX + surfaceRadius * math.cos(math.rad(mainCharacter.onPlanetPosition));
 		mainCharacter.y = planetCenterY + surfaceRadius * math.sin(math.rad(mainCharacter.onPlanetPosition));
 	end
+
+	heartBoy.x = mainCharacter.x
+	heartBoy.y = mainCharacter.y + 30
 end
 Runtime:addEventListener( "enterFrame", movementController )
 
