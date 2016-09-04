@@ -16,6 +16,7 @@ function scene:create( event )
     bg.height = content.height
     mainCharacter = require("Modules.MainCharacter");
     goldberry = require("Modules.Goldberry");
+    mainCharacter.linkToGoldberry = goldberry;
     characterController = require("Modules.CharacterController");
     planet = require("Modules.Planet")
     characterController:init(mainCharacter);

@@ -14,7 +14,7 @@ ground.rotation = 0
 
 local m_Flower = require("Modules.Spawning.Flower");
 
-for i=1,20 do
+for i=1,40 do
 local flower =  m_Flower.new();
 	--flower:setFillColor( 1,0,0 )
 	flower.startPos = math.random(1,360)

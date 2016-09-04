@@ -28,8 +28,10 @@ mainCharacter.y = planetCenterY + surfaceRadius * math.sin(math.rad(mainCharacte
 mainCharacter.xScale = 0.8
 mainCharacter.yScale = 0.8
 
-objectInHand = nil;
-typeInHand = nil;
+mainCharacter.objectInHand = nil;
+mainCharacter.typeInHand = nil;
+
+mainCharacter.linkToGoldberry = nil;
 
 -- private parameters
 local maxSpeedX = 12.0;
@@ -80,32 +82,56 @@ end
 
 function mainCharacter:pickFlower()
 	-- ignore command if hands are full already
-	if typeInHand then return end
-	
+	if mainCharacter.typeInHand then return end
+
 	local pullAreaSize = 100;
 	-- get flower that is close to the character
 	for i=1, #rotateGroup  do
-		if(rotateGroup[i].x >= mainCharacter.x-pullAreaSize and rotateGroup[i].x <= mainCharacter.x+pullAreaSize) then
+		if(rotateGroup[i] and rotateGroup[i].x >= mainCharacter.x-pullAreaSize and rotateGroup[i].x <= mainCharacter.x+pullAreaSize) then
 			-- init new flower on place of current one
-			objectInHand = display.newImage( "Textures/flower.png" );
-			objectInHand.x = rotateGroup[i].x;
-			objectInHand.y = rotateGroup[i].y;
+			mainCharacter.objectInHand = display.newImage( "Textures/flower.png" );
+			mainCharacter.objectInHand.x = rotateGroup[i].x;
+			mainCharacter.objectInHand.y = rotateGroup[i].y;
 
 			-- remove flower on planet
 			rotateGroup[i]:removeSelf( );
 			rotateGroup[i] = nil;
 
 			-- animate new flower
-			transition.to(objectInHand, {time=300, x=mainCharacter.x, y=mainCharacter.y + 30, rotation = -90});
+			transition.to(mainCharacter.objectInHand, {time=300, x=mainCharacter.x, y=mainCharacter.y + 30, rotation = -90});
 
-			typeInHand = PickableObject.Flower;
+			mainCharacter.typeInHand = PickableObject.Flower;
 			break
 		end
 	end
+end
 
+function mainCharacter:givePresent()
+	-- ignore command if nothing to present
+	if not mainCharacter.typeInHand then return end
+
+	if(mainCharacter.typeInHand==PickableObject.Flower) then
+		local flower = display.newImage( "Textures/flower.png" );
+		flower.x = mainCharacter.objectInHand.x;
+		flower.y = mainCharacter.objectInHand.y;
+		flower.rotation = mainCharacter.objectInHand.rotation;
+
+		local newX = mainCharacter.linkToGoldberry.x+15;
+		local newY = mainCharacter.linkToGoldberry.y + 30;
+		local newR = math.random( 70,110 );
+		transition.to(flower,{time=500,rotation=newR,x=newX,y=newY});
+
+		mainCharacter.linkToGoldberry.presents[#mainCharacter.linkToGoldberry.presents+1] = flower;
+		girlProgress = girlProgress+10;
+	end
+
+	mainCharacter.objectInHand:removeSelf( );
+	mainCharacter.objectInHand = nil;
+	mainCharacter.typeInHand = nil;
 end
 
 function mainCharacter:catchStar()
+	
 end
 
 -- controlling character movements
@@ -134,9 +160,9 @@ local function movementController(event)
 		mainCharacter.x = planetCenterX + leapHeight * math.cos(math.rad(mainCharacter.onPlanetPosition));
 		mainCharacter.y = planetCenterY + leapHeight * math.sin(math.rad(mainCharacter.onPlanetPosition));
 
-		if(objectInHand) then 
-			objectInHand.x = mainCharacter.x
-			objectInHand.y = mainCharacter.y + 30
+		if(mainCharacter.objectInHand~=nil) then 
+			mainCharacter.objectInHand.x = mainCharacter.x
+			mainCharacter.objectInHand.y = mainCharacter.y + 30
 		end
 
 		-- increase sinusoidal entry
@@ -164,11 +190,16 @@ local function movementController(event)
 		mainCharacter.x = planetCenterX + surfaceRadius * math.cos(math.rad(mainCharacter.onPlanetPosition));
 		mainCharacter.y = planetCenterY + surfaceRadius * math.sin(math.rad(mainCharacter.onPlanetPosition));
 
-		if(objectInHand~=nil) then 
-			objectInHand.x = mainCharacter.x
-			objectInHand.y = mainCharacter.y + 30
+		if(mainCharacter.objectInHand~=nil) then 
+			mainCharacter.objectInHand.x = mainCharacter.x
+			mainCharacter.objectInHand.y = mainCharacter.y + 30
 		end
 	end
+
+	if(mainCharacter.x>= mainCharacter.linkToGoldberry.x-200 and mainCharacter.x<= mainCharacter.linkToGoldberry.x+200) then
+		mainCharacter:givePresent();
+	end
+
 end
 Runtime:addEventListener( "enterFrame", movementController )
 
