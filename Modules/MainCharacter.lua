@@ -108,7 +108,9 @@ local function movementController(event)
 	mainCharacter.x = planetCenterX + surfaceRadius * math.cos(math.rad(targetAngle));
 	mainCharacter.y = planetCenterY + surfaceRadius * math.sin(math.rad(targetAngle));
 	heartBoy.x = mainCharacter.x
-	heartBoy.y = mainCharacter.y + 30
+	heartBoy.y = mainCharacter.y+30
+	coordinatesX = mainCharacter.x
+	coordinatesY = mainCharacter.y
 end
 Runtime:addEventListener( "enterFrame", movementController )
 

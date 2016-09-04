@@ -9,6 +9,7 @@ guyProgress = 100
 mainCharacter = {}
 rotateGroup = {}
 planetRadius = 2000;
+statusStar = 0
 
 --test of color change
 --[[local function test()

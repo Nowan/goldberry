@@ -31,6 +31,7 @@ function scene:create( event )
             myText1.text = guyProgress
             heartBoy:setFillColor(guyProgress/100, 0, 1-(guyProgress/100) )
             heartGirl:setFillColor(girlProgress/100, 0, 1-(girlProgress/100) )
+            --print( statusStar.." statusStarMain" )
     end
     Runtime:addEventListener( "enterFrame", progressTest )
 end
