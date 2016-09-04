@@ -7,6 +7,8 @@
 girlProgress = 0;
 guyProgress = 100
 mainCharacter = {}
+mainCharacter.x = 1
+mainCharacter.y=1
 rotateGroup = {}
 planetRadius = 2000;
 
