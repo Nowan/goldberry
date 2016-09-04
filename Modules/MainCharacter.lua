@@ -29,6 +29,7 @@ mainCharacter.xScale = 0.8
 mainCharacter.yScale = 0.8
 
 objectInHand = nil;
+typeInHand = nil;
 
 -- private parameters
 local maxSpeedX = 12.0;
@@ -78,6 +79,9 @@ function mainCharacter:jump()
 end
 
 function mainCharacter:pickFlower()
+	-- ignore command if hands are full already
+	if typeInHand then return end
+	
 	local pullAreaSize = 100;
 	-- get flower that is close to the character
 	for i=1, #rotateGroup  do
@@ -92,7 +96,9 @@ function mainCharacter:pickFlower()
 			rotateGroup[i] = nil;
 
 			-- animate new flower
-			transition.to(objectInHand, {time=300, x=mainCharacter.x, y=mainCharacter.y + 30, rotation = -90})
+			transition.to(objectInHand, {time=300, x=mainCharacter.x, y=mainCharacter.y + 30, rotation = -90});
+
+			typeInHand = PickableObject.Flower;
 			break
 		end
 	end

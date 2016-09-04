@@ -33,3 +33,9 @@ planetCenterY = content.height+planetRadius-200;
 
 fromTime = 5 -- secons from 5 (star)
 toTime = 15 -- secons to 15 (star)
+
+-- enum of all objects that could be picked and presented to the girl
+PickableObject = {
+	Flower = 0,
+	Star = 1
+};
